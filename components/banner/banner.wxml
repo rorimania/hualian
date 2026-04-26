@@ -1,0 +1,33 @@
+<view class="banner-wrapper">
+  <swiper
+    class="banner-swiper"
+    circular="{{true}}"
+    autoplay="{{true}}"
+    interval="4000"
+    duration="600"
+    indicator-color="rgba(255,255,255,0.4)"
+    indicator-active-color="#FF8FAB"
+    bindchange="onSwiperChange"
+  >
+    <swiper-item
+      wx:for="{{banners}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="onBannerTap"
+    >
+      <view class="banner-slide">
+        <image class="banner-image" src="{{item.image}}" mode="aspectFill"></image>
+        <view class="banner-overlay">
+          <text class="banner-title">{{item.title}}</text>
+        </view>
+      </view>
+    </swiper-item>
+  </swiper>
+  <view class="banner-dots">
+    <view
+      wx:for="{{banners}}"
+      wx:key="index"
+      class="dot {{current === index ? 'dot-active' : ''}}"
+    ></view>
+  </view>
+</view>

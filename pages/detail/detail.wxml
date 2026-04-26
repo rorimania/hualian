@@ -1,0 +1,80 @@
+<view class="page" wx:if="{{flower}}">
+  <!-- ===== 图片轮播 ===== -->
+  <view class="image-section">
+    <swiper
+      class="image-swiper"
+      circular="{{true}}"
+      indicator-color="rgba(255,255,255,0.4)"
+      indicator-active-color="#FF8FAB"
+      bindchange="onImageChange"
+    >
+      <swiper-item wx:for="{{flower.images}}" wx:key="index">
+        <image class="detail-image" src="{{item}}" mode="aspectFill"></image>
+      </swiper-item>
+    </swiper>
+    <view class="image-counter">{{currentImage + 1}}/{{flower.images.length}}</view>
+    <view wx:if="{{flower.tag}}" class="image-tag">{{flower.tag}}</view>
+  </view>
+
+  <!-- ===== 商品信息 ===== -->
+  <view class="info-section">
+    <view class="title-row">
+      <view class="title-group">
+        <text class="flower-name">{{flower.name}}</text>
+        <text class="flower-english">{{flower.englishName}}</text>
+      </view>
+      <view class="favorite-btn {{isFavorite ? 'active' : ''}}" bindtap="toggleFavorite">
+        <text class="favorite-icon">{{isFavorite ? '💖' : '🤍'}}</text>
+        <text class="favorite-text">{{isFavorite ? '已收藏' : '收藏'}}</text>
+      </view>
+    </view>
+
+    <view class="price-row">
+      <view class="price-group">
+        <text class="price-symbol">¥</text>
+        <text class="price-current">{{flower.price}}</text>
+        <text wx:if="{{flower.originalPrice > flower.price}}" class="price-original">¥{{flower.originalPrice}}</text>
+      </view>
+      <text class="sales-info">已售 {{flower.sales}} 件</text>
+    </view>
+
+    <view class="desc-text">{{flower.desc}}</view>
+  </view>
+
+  <!-- ===== 花的故事 ===== -->
+  <view class="story-section card">
+    <view class="story-header">
+      <text class="story-title">📖 花物語</text>
+    </view>
+    <text class="story-text">{{flower.story}}</text>
+  </view>
+
+  <!-- ===== 数量选择 ===== -->
+  <view class="qty-section">
+    <text class="qty-label">数量</text>
+    <view class="qty-control">
+      <view class="qty-btn {{quantity <= 1 ? 'disabled' : ''}}" bindtap="decreaseQty">−</view>
+      <text class="qty-value">{{quantity}}</text>
+      <view class="qty-btn {{quantity >= 99 ? 'disabled' : ''}}" bindtap="increaseQty">+</view>
+    </view>
+  </view>
+
+  <!-- ===== 底部操作栏 ===== -->
+  <view class="bottom-bar safe-bottom">
+    <view class="bottom-cart" bindtap="addToCart">
+      <text class="cart-icon">🛒</text>
+      <view wx:if="{{cartCount > 0}}" class="cart-badge">{{cartCount}}</view>
+      <text class="cart-label">加入购物车</text>
+    </view>
+    <view class="bottom-buy" bindtap="buyNow">立即购买</view>
+  </view>
+
+  <!-- ===== Toast ===== -->
+  <view wx:if="{{showToast}}" class="toast-mask">
+    <view class="toast-box">
+      <text class="toast-text">{{toastText}}</text>
+    </view>
+  </view>
+
+  <view class="bottom-placeholder"></view>
+</view>

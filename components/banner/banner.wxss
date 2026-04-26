@@ -1,0 +1,58 @@
+.banner-wrapper {
+  position: relative;
+  border-radius: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(201, 177, 255, 0.15);
+}
+
+.banner-swiper {
+  height: 280rpx;
+}
+
+.banner-slide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.banner-image {
+  width: 100%;
+  height: 100%;
+}
+
+.banner-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 60rpx 28rpx 28rpx;
+  background: linear-gradient(transparent, rgba(74, 63, 92, 0.3));
+}
+
+.banner-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.banner-dots {
+  position: absolute;
+  bottom: 16rpx;
+  right: 24rpx;
+  display: flex;
+  gap: 8rpx;
+}
+
+.dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 6rpx;
+  background: rgba(255, 255, 255, 0.4);
+  transition: all 0.3s;
+}
+
+.dot-active {
+  width: 28rpx;
+  background: #FF8FAB;
+}

@@ -1,0 +1,65 @@
+<view class="page">
+  <!-- ===== Tab 切换 ===== -->
+  <view class="tabs glass">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="index"
+      class="tab-item {{currentTab === index ? 'active' : ''}}"
+      data-index="{{index}}"
+      bindtap="switchTab"
+    >
+      <text class="tab-text">{{item}}</text>
+      <view wx:if="{{currentTab === index}}" class="tab-indicator"></view>
+    </view>
+  </view>
+
+  <!-- ===== 订单列表 ===== -->
+  <view class="order-list">
+    <view wx:if="{{orders.length === 0}}" class="empty-state">
+      <text class="empty-icon">📦</text>
+      <text class="empty-text">暂无订单</text>
+    </view>
+
+    <view
+      wx:for="{{orders}}"
+      wx:key="id"
+      class="order-card card"
+    >
+      <view class="order-header">
+        <text class="order-id">订单 #{{item.shortId}}</text>
+        <text class="order-status {{item.status}}">{{item.statusText}}</text>
+      </view>
+
+      <view class="order-items">
+        <view
+          wx:for="{{item.items}}"
+          wx:key="id"
+          class="order-item"
+          data-id="{{item.id}}"
+          bindtap="goToDetail"
+        >
+          <image class="item-image" src="{{item.image}}" mode="aspectFill"></image>
+          <view class="item-info">
+            <text class="item-name">{{item.name}}</text>
+            <text class="item-price">¥{{item.price}} × {{item.quantity}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="order-footer">
+        <text class="order-time">{{item.createTime}}</text>
+        <text class="order-total">合计：<text class="total-price">¥{{item.totalPrice}}</text></text>
+      </view>
+
+      <view wx:if="{{item.status === 'pending'}}" class="order-actions">
+        <view class="action-btn cancel" data-id="{{item.id}}" bindtap="cancelOrder">取消订单</view>
+        <view class="action-btn primary" data-id="{{item.id}}" bindtap="confirmOrder">确认收货</view>
+      </view>
+      <view wx:elif="{{item.status === 'shipped'}}" class="order-actions">
+        <view class="action-btn primary" data-id="{{item.id}}" bindtap="confirmOrder">确认收货</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="tabbar-placeholder"></view>
+</view>

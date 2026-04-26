@@ -1,0 +1,200 @@
+.page {
+  padding: 0 24rpx;
+  min-height: 100vh;
+  background: #FFF8F5;
+}
+
+/* Tab 切换 */
+.tabs {
+  display: flex;
+  margin: 20rpx 0;
+  padding: 8rpx;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 24rpx;
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  padding: 16rpx 0;
+  border-radius: 16rpx;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.tab-item.active {
+  background: linear-gradient(135deg, #FFF0F5, #FFE8F0);
+}
+
+.tab-text {
+  font-size: 24rpx;
+  color: #9B8EAD;
+  font-weight: 500;
+}
+
+.tab-item.active .tab-text {
+  color: #FF8FAB;
+  font-weight: 700;
+}
+
+.tab-indicator {
+  width: 24rpx;
+  height: 4rpx;
+  background: #FF8FAB;
+  border-radius: 2rpx;
+}
+
+/* 订单列表 */
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  padding-bottom: 40rpx;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120rpx 0;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 16rpx;
+}
+
+.empty-text {
+  font-size: 26rpx;
+  color: #C4B8D0;
+}
+
+.order-card {
+  padding: 24rpx;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.order-id {
+  font-size: 22rpx;
+  color: #C4B8D0;
+  font-family: monospace;
+}
+
+.order-status {
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.order-status.pending { color: #FF8FAB; }
+.order-status.shipped { color: #C9B1FF; }
+.order-status.completed { color: #7ED5A8; }
+.order-status.cancelled { color: #C4B8D0; }
+
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  padding: 16rpx 0;
+  border-top: 1rpx solid rgba(201, 177, 255, 0.1);
+  border-bottom: 1rpx solid rgba(201, 177, 255, 0.1);
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.item-image {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 10rpx;
+  flex-shrink: 0;
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-name {
+  display: block;
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #4A3F5C;
+}
+
+.item-price {
+  font-size: 22rpx;
+  color: #C4B8D0;
+}
+
+.order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16rpx;
+}
+
+.order-time {
+  font-size: 20rpx;
+  color: #C4B8D0;
+}
+
+.order-total {
+  font-size: 24rpx;
+  color: #9B8EAD;
+}
+
+.total-price {
+  font-size: 28rpx;
+  font-weight: 800;
+  color: #FF8FAB;
+}
+
+.order-actions {
+  display: flex;
+  gap: 16rpx;
+  justify-content: flex-end;
+  padding-top: 16rpx;
+  border-top: 1rpx solid rgba(201, 177, 255, 0.1);
+  margin-top: 16rpx;
+}
+
+.action-btn {
+  padding: 14rpx 32rpx;
+  font-size: 24rpx;
+  font-weight: 600;
+  border-radius: 30rpx;
+  transition: all 0.3s;
+}
+
+.action-btn.cancel {
+  background: rgba(201, 177, 255, 0.1);
+  color: #9B8EAD;
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, #FF8FAB, #FFB7C8);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(255, 143, 171, 0.25);
+}
+
+.action-btn:active {
+  opacity: 0.8;
+  transform: scale(0.96);
+}
+
+.tabbar-placeholder {
+  height: 140rpx;
+}

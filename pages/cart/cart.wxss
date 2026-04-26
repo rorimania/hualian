@@ -1,0 +1,252 @@
+.page {
+  min-height: 100vh;
+  padding: 0 24rpx;
+  background: #FFF8F5;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 200rpx 0 80rpx;
+}
+
+.empty-icon {
+  font-size: 100rpx;
+  margin-bottom: 24rpx;
+}
+
+.empty-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #4A3F5C;
+  margin-bottom: 8rpx;
+}
+
+.empty-desc {
+  font-size: 26rpx;
+  color: #C4B8D0;
+  margin-bottom: 40rpx;
+}
+
+/* 列表 */
+.cart-list {
+  padding-bottom: 150rpx;
+}
+
+.cart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 16rpx;
+  margin-bottom: 16rpx;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 24rpx;
+}
+
+.select-all {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.header-count {
+  font-size: 24rpx;
+  color: #C4B8D0;
+}
+
+/* 复选框 */
+.checkbox {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  border: 2rpx solid #C4B8D0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20rpx;
+  color: #FFFFFF;
+  font-weight: 700;
+  transition: all 0.3s;
+}
+
+.checkbox.checked {
+  background: linear-gradient(135deg, #FF8FAB, #FFB7C8);
+  border-color: #FF8FAB;
+}
+
+.select-text {
+  font-size: 26rpx;
+  color: #9B8EAD;
+  font-weight: 500;
+}
+
+/* 商品行 */
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 20rpx;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 24rpx;
+}
+
+.checkbox-wrapper {
+  padding: 8rpx;
+}
+
+.item-image {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 16rpx;
+  flex-shrink: 0;
+}
+
+.item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.item-name {
+  display: block;
+  font-size: 26rpx;
+  font-weight: 700;
+  color: #4A3F5C;
+  margin-bottom: 4rpx;
+}
+
+.item-price {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #FF8FAB;
+  margin-bottom: 12rpx;
+}
+
+.item-qty {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: rgba(201, 177, 255, 0.08);
+  border-radius: 22rpx;
+  display: inline-flex;
+}
+
+.item-qty .qty-btn {
+  width: 52rpx;
+  height: 52rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  color: #4A3F5C;
+  font-weight: 600;
+}
+
+.item-qty .qty-btn:active {
+  background: rgba(255, 143, 171, 0.1);
+  border-radius: 22rpx;
+}
+
+.item-qty .qty-value {
+  width: 56rpx;
+  text-align: center;
+  font-size: 24rpx;
+  font-weight: 700;
+  color: #4A3F5C;
+}
+
+.item-remove {
+  padding: 12rpx;
+  color: #C4B8D0;
+  font-size: 24rpx;
+}
+
+/* 底部结算栏 */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 16rpx 24rpx;
+  padding-bottom: calc(16rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1rpx solid rgba(201, 177, 255, 0.12);
+  z-index: 100;
+}
+
+.total-group {
+  flex: 1;
+  text-align: right;
+}
+
+.total-label {
+  font-size: 24rpx;
+  color: #9B8EAD;
+}
+
+.total-price {
+  font-size: 36rpx;
+  font-weight: 800;
+  color: #FF8FAB;
+}
+
+.checkout-btn {
+  padding: 18rpx 48rpx;
+  background: linear-gradient(135deg, #FF8FAB, #FFB7C8);
+  color: #FFFFFF;
+  font-size: 28rpx;
+  font-weight: 700;
+  border-radius: 40rpx;
+  box-shadow: 0 4px 12px rgba(255, 143, 171, 0.3);
+}
+
+.checkout-btn:active {
+  opacity: 0.85;
+  transform: scale(0.97);
+}
+
+/* Toast */
+.toast-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  pointer-events: none;
+}
+
+.toast-box {
+  padding: 24rpx 48rpx;
+  background: rgba(74, 63, 92, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 40rpx;
+}
+
+.toast-text {
+  font-size: 28rpx;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+.tabbar-placeholder {
+  height: 140rpx;
+}

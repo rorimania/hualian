@@ -1,0 +1,25 @@
+<view class="product-card {{small ? 'small' : ''}}" bindtap="onTap">
+  <view class="image-wrapper">
+    <image
+      class="product-image"
+      src="{{flower.images[0]}}"
+      mode="aspectFill"
+      bindload="onImageLoad"
+    ></image>
+    <view wx:if="{{flower.tag}}" class="tag">{{flower.tag}}</view>
+    <view wx:if="{{flower.originalPrice > flower.price}}" class="discount-badge">
+      <text>{{discountPercent}}%OFF</text>
+    </view>
+  </view>
+  <view class="product-info">
+    <text class="product-name">{{flower.name}}</text>
+    <text class="product-english">{{flower.englishName}}</text>
+    <view class="product-bottom">
+      <view class="price-group">
+        <text class="price-current">¥{{flower.price}}</text>
+        <text wx:if="{{flower.originalPrice > flower.price}}" class="price-original">¥{{flower.originalPrice}}</text>
+      </view>
+      <text class="sales">已售 {{salesText}}</text>
+    </view>
+  </view>
+</view>

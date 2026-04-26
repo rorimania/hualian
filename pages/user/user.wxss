@@ -1,0 +1,399 @@
+.page {
+  padding: 0 24rpx;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #FFF0F5 0%, #FFF8F5 30%);
+}
+
+/* 用户头部 */
+.user-header {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  padding: 48rpx 0 28rpx;
+}
+
+.avatar-wrapper {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(255, 143, 171, 0.2);
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #FFE8F0, #FFF0F5);
+}
+
+.avatar-emoji {
+  font-size: 48rpx;
+}
+
+.user-meta {
+  flex: 1;
+}
+
+.user-name {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 800;
+  color: #4A3F5C;
+}
+
+.login-hint {
+  color: #FF8FAB;
+}
+
+.user-tag {
+  display: block;
+  font-size: 22rpx;
+  color: #C4B8D0;
+  margin-top: 4rpx;
+}
+
+/* Tab 导航 */
+.profile-tabs {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.profile-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  padding: 20rpx;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 24rpx;
+  transition: all 0.3s;
+}
+
+.profile-tab.active {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 12px rgba(201, 177, 255, 0.12);
+}
+
+.profile-tab .tab-icon {
+  font-size: 28rpx;
+}
+
+.profile-tab .tab-text {
+  font-size: 24rpx;
+  color: #9B8EAD;
+  font-weight: 500;
+}
+
+.profile-tab.active .tab-text {
+  color: #FF8FAB;
+  font-weight: 700;
+}
+
+/* 卡片通用 */
+.section-card {
+  margin-bottom: 20rpx;
+  padding: 24rpx;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.section-title {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: #4A3F5C;
+}
+
+.section-more {
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+  font-size: 22rpx;
+  color: #C4B8D0;
+}
+
+.arrow {
+  font-size: 28rpx;
+}
+
+/* 订单统计 */
+.order-stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 12rpx 0;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+  padding: 8rpx 20rpx;
+}
+
+.stat-count {
+  font-size: 32rpx;
+  font-weight: 800;
+  color: #4A3F5C;
+}
+
+.stat-label {
+  font-size: 20rpx;
+  color: #C4B8D0;
+}
+
+/* 收藏夹 */
+.empty-fav {
+  padding: 32rpx 0;
+  text-align: center;
+}
+
+.empty-text {
+  font-size: 24rpx;
+  color: #C4B8D0;
+}
+
+.fav-scroll {
+  white-space: nowrap;
+  padding: 8rpx 0;
+}
+
+.fav-scroll-inner {
+  display: flex;
+  gap: 16rpx;
+}
+
+.fav-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+  width: 160rpx;
+  background: rgba(255, 240, 245, 0.5);
+  border-radius: 16rpx;
+  padding: 12rpx;
+  position: relative;
+}
+
+.fav-image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 10rpx;
+}
+
+.fav-info {
+  text-align: center;
+}
+
+.fav-name {
+  display: block;
+  font-size: 22rpx;
+  font-weight: 600;
+  color: #4A3F5C;
+}
+
+.fav-price {
+  font-size: 20rpx;
+  color: #FF8FAB;
+  font-weight: 600;
+}
+
+.fav-remove {
+  position: absolute;
+  top: 4rpx;
+  right: 4rpx;
+  width: 36rpx;
+  height: 36rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  font-size: 18rpx;
+  color: #FFFFFF;
+}
+
+/* 地址管理 */
+.address-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  padding-bottom: 40rpx;
+}
+
+.empty-addr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80rpx 0;
+}
+
+.empty-addr .empty-icon {
+  font-size: 64rpx;
+  margin-bottom: 12rpx;
+}
+
+.address-card {
+  padding: 24rpx;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.addr-info {
+  margin-bottom: 16rpx;
+}
+
+.addr-top {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 8rpx;
+}
+
+.addr-name {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: #4A3F5C;
+}
+
+.addr-phone {
+  font-size: 24rpx;
+  color: #9B8EAD;
+}
+
+.default-tag {
+  font-size: 18rpx;
+  padding: 2rpx 12rpx;
+  background: linear-gradient(135deg, #FF8FAB, #FFB7C8);
+  color: #FFFFFF;
+  border-radius: 16rpx;
+}
+
+.addr-detail {
+  font-size: 24rpx;
+  color: #9B8EAD;
+}
+
+.addr-actions {
+  display: flex;
+  gap: 12rpx;
+  border-top: 1rpx solid rgba(201, 177, 255, 0.1);
+  padding-top: 16rpx;
+}
+
+.addr-btn {
+  padding: 8rpx 20rpx;
+  font-size: 22rpx;
+  color: #9B8EAD;
+  background: rgba(201, 177, 255, 0.08);
+  border-radius: 20rpx;
+}
+
+.addr-btn.danger {
+  color: #FF6B8A;
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx;
+  background: rgba(255, 255, 255, 0.6);
+  border: 2rpx dashed rgba(201, 177, 255, 0.3);
+  border-radius: 24rpx;
+  font-size: 26rpx;
+  color: #9B8EAD;
+  font-weight: 500;
+}
+
+.add-btn:active {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* 表单弹窗 */
+.form-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(74, 63, 92, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.form-modal {
+  width: 600rpx;
+  padding: 40rpx;
+  background: #FFFFFF;
+}
+
+.form-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 800;
+  color: #4A3F5C;
+  margin-bottom: 32rpx;
+  text-align: center;
+}
+
+.form-input {
+  width: 100%;
+  height: 72rpx;
+  padding: 0 20rpx;
+  margin-bottom: 20rpx;
+  background: rgba(201, 177, 255, 0.06);
+  border: 1rpx solid rgba(201, 177, 255, 0.15);
+  border-radius: 16rpx;
+  font-size: 26rpx;
+  color: #4A3F5C;
+  box-sizing: border-box;
+}
+
+.form-btns {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 16rpx;
+}
+
+.form-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 72rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  border-radius: 36rpx;
+}
+
+.form-btn.cancel {
+  background: rgba(201, 177, 255, 0.1);
+  color: #9B8EAD;
+}
+
+.form-btn.confirm {
+  background: linear-gradient(135deg, #FF8FAB, #FFB7C8);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(255, 143, 171, 0.25);
+}
+
+.tabbar-placeholder {
+  height: 140rpx;
+}

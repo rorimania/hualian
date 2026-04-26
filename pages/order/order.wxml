@@ -1,0 +1,84 @@
+<view class="page">
+  <!-- ===== 收货地址 ===== -->
+  <view class="section-card card" bindtap="selectAddress">
+    <view wx:if="{{hasAddress}}" class="address-info">
+      <view class="address-top">
+        <text class="address-name">{{address.name}}</text>
+        <text class="address-phone">{{address.phone}}</text>
+      </view>
+      <view class="address-detail">
+        <text class="address-icon">📍</text>
+        <text class="address-text">{{address.fullAddress}}</text>
+      </view>
+    </view>
+    <view wx:else class="address-empty">
+      <text class="address-icon">📍</text>
+      <text class="address-text">请添加收货地址</text>
+      <text class="address-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- ===== 商品列表 ===== -->
+  <view class="section-card card">
+    <text class="section-title">🌸 商品信息</text>
+    <view class="order-items">
+      <view wx:for="{{items}}" wx:key="id" class="order-item">
+        <image class="item-image" src="{{item.image}}" mode="aspectFill"></image>
+        <view class="item-info">
+          <text class="item-name">{{item.name}}</text>
+          <text class="item-price">¥{{item.price}}</text>
+        </view>
+        <text class="item-qty">×{{item.quantity}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 备注 ===== -->
+  <view class="section-card card">
+    <view class="remark-row">
+      <text class="remark-label">📝 备注</text>
+      <input
+        class="remark-input"
+        placeholder="有什么想说的吗..."
+        placeholder-class="placeholder"
+        value="{{remark}}"
+        bindinput="onRemarkInput"
+      ></input>
+    </view>
+  </view>
+
+  <!-- ===== 金额汇总 ===== -->
+  <view class="section-card card">
+    <view class="summary-row">
+      <text class="summary-label">商品金额</text>
+      <text class="summary-value">¥{{totalPrice}}</text>
+    </view>
+    <view class="summary-row">
+      <text class="summary-label">配送费</text>
+      <text class="summary-value free">免运费</text>
+    </view>
+    <view class="divider"></view>
+    <view class="summary-row total">
+      <text class="summary-label">合计</text>
+      <text class="summary-total">¥{{totalPrice}}</text>
+    </view>
+  </view>
+
+  <!-- ===== 底部提交 ===== -->
+  <view class="bottom-bar safe-bottom">
+    <view class="bottom-total">
+      <text class="total-label">合计：</text>
+      <text class="total-price">¥{{totalPrice}}</text>
+    </view>
+    <view class="submit-btn" bindtap="submitOrder">提交订单</view>
+  </view>
+
+  <!-- ===== Toast ===== -->
+  <view wx:if="{{showToast}}" class="toast-mask">
+    <view class="toast-box">
+      <text class="toast-text">{{toastText}}</text>
+    </view>
+  </view>
+
+  <view class="bottom-placeholder"></view>
+</view>

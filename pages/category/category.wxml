@@ -1,0 +1,63 @@
+<view class="page">
+  <!-- ===== 搜索框 ===== -->
+  <view class="search-bar glass">
+    <text class="search-icon">🔍</text>
+    <input
+      class="search-input"
+      placeholder="搜索花束・花言葉..."
+      placeholder-class="placeholder"
+      value="{{searchValue}}"
+      focus="{{showSearch}}"
+      bindinput="onSearchInput"
+      bindconfirm="onSearch"
+      confirm-type="search"
+    ></input>
+    <text wx:if="{{searchValue}}" class="clear-btn" bindtap="onSearch">搜索</text>
+  </view>
+
+  <!-- ===== 分类 + 列表 ===== -->
+  <view class="content">
+    <!-- 左侧分类 -->
+    <scroll-view class="category-sidebar" scroll-y>
+      <view
+        class="category-item {{currentCategory === null ? 'active' : ''}}"
+        data-id="{{null}}"
+        bindtap="selectCategory"
+      >
+        <text class="category-icon">🌸</text>
+        <text class="category-text">全部</text>
+      </view>
+      <view
+        wx:for="{{categories}}"
+        wx:key="id"
+        class="category-item {{currentCategory === item.id ? 'active' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="selectCategory"
+      >
+        <text class="category-icon">{{item.icon}}</text>
+        <text class="category-text">{{item.name}}</text>
+      </view>
+    </scroll-view>
+
+    <!-- 右侧商品列表 -->
+    <scroll-view class="flower-list" scroll-y lower-threshold="100">
+      <view wx:if="{{flowers.length === 0}}" class="empty-state">
+        <text class="empty-icon">🔍</text>
+        <text class="empty-text">没有找到相关花束</text>
+      </view>
+      <view wx:else class="flower-grid">
+        <view
+          wx:for="{{flowers}}"
+          wx:key="id"
+          class="flower-item"
+          data-id="{{item.id}}"
+          bindtap="goToDetail"
+        >
+          <product-card flower="{{item}}"></product-card>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="tabbar-placeholder"></view>
+</view>

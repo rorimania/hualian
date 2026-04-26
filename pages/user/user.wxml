@@ -1,0 +1,157 @@
+<view class="page">
+  <!-- ===== 用户信息头部 ===== -->
+  <view class="user-header">
+    <view class="avatar-wrapper">
+      <image wx:if="{{loggedIn && userInfo.avatarUrl}}" class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+      <view wx:else class="avatar-placeholder">
+        <text class="avatar-emoji">🌸</text>
+      </view>
+    </view>
+    <view wx:if="{{loggedIn}}" class="user-meta">
+      <text class="user-name">{{userInfo.nickName}}</text>
+      <text class="user-tag">花を愛する人</text>
+    </view>
+    <view wx:else class="user-meta" bindtap="onLogin">
+      <text class="user-name login-hint">点击登录</text>
+      <text class="user-tag">登录解锁更多功能 ✨</text>
+    </view>
+  </view>
+
+  <!-- ===== Tab 导航 ===== -->
+  <view class="profile-tabs">
+    <view
+      class="profile-tab {{currentTab === 'profile' ? 'active' : ''}}"
+      data-tab="profile"
+      bindtap="switchTab"
+    >
+      <text class="tab-icon">👤</text>
+      <text class="tab-text">个人主页</text>
+    </view>
+    <view
+      class="profile-tab {{currentTab === 'address' ? 'active' : ''}}"
+      data-tab="address"
+      bindtap="switchTab"
+    >
+      <text class="tab-icon">📍</text>
+      <text class="tab-text">收货地址</text>
+    </view>
+  </view>
+
+  <!-- ===== 个人主页 Tab ===== -->
+  <view wx:if="{{currentTab === 'profile'}}">
+    <!-- 订单入口 -->
+    <view class="section-card card" bindtap="goToOrders">
+      <view class="section-header">
+        <text class="section-title">📋 我的订单</text>
+        <view class="section-more">
+          <text>查看全部</text>
+          <text class="arrow">›</text>
+        </view>
+      </view>
+      <view class="order-stats">
+        <view class="stat-item" data-status="pending" bindtap="goToOrdersTab">
+          <text class="stat-count">{{orderCounts.pending}}</text>
+          <text class="stat-label">待付款</text>
+        </view>
+        <view class="stat-item" data-status="shipped" bindtap="goToOrdersTab">
+          <text class="stat-count">{{orderCounts.shipped}}</text>
+          <text class="stat-label">待发货</text>
+        </view>
+        <view class="stat-item" data-status="completed" bindtap="goToOrdersTab">
+          <text class="stat-count">{{orderCounts.completed}}</text>
+          <text class="stat-label">已完成</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-count">{{orderCounts.all}}</text>
+          <text class="stat-label">全部</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 收藏夹 -->
+    <view class="section-card card">
+      <view class="section-header">
+        <text class="section-title">💖 我的收藏</text>
+      </view>
+      <view wx:if="{{favoriteFlowers.length === 0}}" class="empty-fav">
+        <text class="empty-text">还没有收藏的花束哦～</text>
+      </view>
+      <scroll-view wx:else class="fav-scroll" scroll-x>
+        <view class="fav-scroll-inner">
+          <view
+            wx:for="{{favoriteFlowers}}"
+            wx:key="id"
+            class="fav-item"
+            data-id="{{item.id}}"
+            bindtap="goToDetail"
+          >
+            <image class="fav-image" src="{{item.images[0]}}" mode="aspectFill"></image>
+            <view class="fav-info">
+              <text class="fav-name">{{item.name}}</text>
+              <text class="fav-price">¥{{item.price}}</text>
+            </view>
+            <view class="fav-remove" data-id="{{item.id}}" bindtap="removeFavorite">
+              <text>✕</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <!-- ===== 地址管理 Tab ===== -->
+  <view wx:if="{{currentTab === 'address'}}">
+    <view class="address-section">
+      <view wx:if="{{addresses.length === 0}}" class="empty-addr">
+        <text class="empty-icon">📍</text>
+        <text class="empty-text">还没有收货地址</text>
+      </view>
+
+      <view
+        wx:for="{{addresses}}"
+        wx:key="id"
+        class="address-card card"
+      >
+        <view class="addr-info">
+          <view class="addr-top">
+            <text class="addr-name">{{item.name}}</text>
+            <text class="addr-phone">{{item.phone}}</text>
+            <text wx:if="{{item.isDefault}}" class="default-tag">默认</text>
+          </view>
+          <text class="addr-detail">{{item.fullAddress}}</text>
+        </view>
+        <view class="addr-actions">
+          <view class="addr-btn" data-id="{{item.id}}" bindtap="setDefaultAddress">
+            设为默认
+          </view>
+          <view class="addr-btn" data-address="{{item}}" bindtap="editAddress">
+            编辑
+          </view>
+          <view class="addr-btn danger" data-id="{{item.id}}" bindtap="deleteAddress">
+            删除
+          </view>
+        </view>
+      </view>
+
+      <view class="add-btn" bindtap="addAddress">
+        <text>＋ 添加新地址</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 地址表单弹窗 ===== -->
+  <view wx:if="{{showAddressForm}}" class="form-mask">
+    <view class="form-modal card">
+      <text class="form-title">{{editingAddress ? '编辑地址' : '新增地址'}}</text>
+      <input class="form-input" placeholder="收货人姓名" value="{{formName}}" bindinput="onNameInput"></input>
+      <input class="form-input" placeholder="手机号码" type="tel" value="{{formPhone}}" bindinput="onPhoneInput"></input>
+      <input class="form-input" placeholder="详细地址" value="{{formAddress}}" bindinput="onAddressInput"></input>
+      <view class="form-btns">
+        <view class="form-btn cancel" bindtap="closeForm">取消</view>
+        <view class="form-btn confirm" bindtap="saveAddress">保存</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="tabbar-placeholder"></view>
+</view>

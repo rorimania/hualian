@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "banner": "/components/banner/banner",
+    "product-card": "/components/product-card/product-card"
+  },
+  "navigationBarTitleText": "花恋 🌸"
+}
