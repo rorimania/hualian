@@ -50,8 +50,6 @@
           wx:for="{{flowers}}"
           wx:key="id"
           class="flower-item"
-          data-id="{{item.id}}"
-          bindtap="goToDetail"
         >
           <product-card flower="{{item}}"></product-card>
         </view>

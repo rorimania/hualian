@@ -59,8 +59,6 @@
           wx:for="{{hotFlowers}}"
           wx:key="id"
           class="flower-scroll-item"
-          data-id="{{item.id}}"
-          bindtap="goToDetail"
         >
           <product-card flower="{{item}}"></product-card>
         </view>
@@ -82,8 +80,6 @@
         wx:for="{{newFlowers}}"
         wx:key="id"
         class="flower-grid-item"
-        data-id="{{item.id}}"
-        bindtap="goToDetail"
       >
         <product-card flower="{{item}}"></product-card>
       </view>
