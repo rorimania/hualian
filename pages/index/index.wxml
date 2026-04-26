@@ -2,9 +2,17 @@
 
   <!-- ===== 搜索栏 ===== -->
   <view class="search-section">
-    <view class="search-bar glass" bindtap="onSearch">
+    <view class="search-bar glass">
       <text class="search-icon">🔍</text>
-      <text class="search-placeholder">搜索花束・花言葉...</text>
+      <input
+        class="search-input"
+        placeholder="搜索花束・花言葉..."
+        placeholder-class="search-placeholder"
+        value="{{searchValue}}"
+        bindinput="onSearchInput"
+        bindconfirm="onSearch"
+        confirm-type="search"
+      ></input>
     </view>
     <view class="header-icons">
       <view class="icon-btn" bindtap="goToCart">

@@ -31,6 +31,13 @@
   font-size: 28rpx;
 }
 
+.search-input {
+  flex: 1;
+  height: 100%;
+  font-size: 26rpx;
+  color: #4A3F5C;
+}
+
 .search-placeholder {
   font-size: 26rpx;
   color: #C4B8D0;
