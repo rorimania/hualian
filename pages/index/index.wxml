@@ -100,6 +100,5 @@
     <text class="footer-sub">Hanakotoba — 花言葉を添えて</text>
   </view>
 
-  <!-- 底部留白给 tabbar -->
-  <view class="tabbar-placeholder"></view>
+</view>
 </view>

@@ -69,5 +69,4 @@
     </view>
   </view>
 
-  <view wx:if="{{hasCart}}" class="tabbar-placeholder"></view>
 </view>

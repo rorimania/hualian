@@ -128,7 +128,3 @@
   color: #C4B8D0;
 }
 
-.tabbar-placeholder {
-  height: 140rpx;
-  flex-shrink: 0;
-}

@@ -195,6 +195,3 @@
   transform: scale(0.96);
 }
 
-.tabbar-placeholder {
-  height: 140rpx;
-}

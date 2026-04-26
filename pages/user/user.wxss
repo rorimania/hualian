@@ -394,6 +394,3 @@
   box-shadow: 0 4px 12px rgba(255, 143, 171, 0.25);
 }
 
-.tabbar-placeholder {
-  height: 140rpx;
-}
