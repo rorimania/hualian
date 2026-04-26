@@ -16,6 +16,13 @@ Page({
     const { id } = options
     const flower = mock.getFlowerById(parseInt(id))
     const favorites = app.globalData.favorites || []
+
+    if (!flower) {
+      wx.showToast({ title: '商品不存在', icon: 'none' })
+      setTimeout(() => wx.navigateBack(), 1500)
+      return
+    }
+
     const isFavorite = favorites.includes(flower.id)
 
     this.setData({

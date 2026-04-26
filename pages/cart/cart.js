@@ -113,6 +113,10 @@ Page({
     })
   },
 
+  goToCategory() {
+    wx.switchTab({ url: '/pages/category/category' })
+  },
+
   showToast(text) {
     this.setData({ showToast: true, toastText: text })
     setTimeout(() => {
