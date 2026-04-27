@@ -1,5 +1,5 @@
-const mock = require('../../mock/data')
 const app = getApp()
+const api = require('../../utils/api')
 
 Page({
   data: {
@@ -9,27 +9,24 @@ Page({
     isFavorite: false,
     cartCount: 0,
     showToast: false,
-    toastText: ''
+    toastText: '',
   },
 
   onLoad(options) {
     const { id } = options
-    const flower = mock.getFlowerById(parseInt(id))
-    const favorites = app.globalData.favorites || []
+    this.loadProduct(id)
+  },
 
-    if (!flower) {
+  async loadProduct(id) {
+    try {
+      const flower = await api.getProductDetail(id)
+      const favorites = app.globalData.favorites || []
+      const isFavorite = favorites.includes(flower.id)
+      this.setData({ flower, isFavorite, currentImage: 0 })
+    } catch (e) {
       wx.showToast({ title: '商品不存在', icon: 'none' })
       setTimeout(() => wx.navigateBack(), 1500)
-      return
     }
-
-    const isFavorite = favorites.includes(flower.id)
-
-    this.setData({
-      flower,
-      isFavorite,
-      currentImage: 0
-    })
   },
 
   onShow() {
@@ -60,7 +57,7 @@ Page({
     let newFavorites
 
     if (isFavorite) {
-      newFavorites = favorites.filter(id => id !== flower.id)
+      newFavorites = favorites.filter((id) => id !== flower.id)
       this.showToast('已取消收藏 💔')
     } else {
       newFavorites = [...favorites, flower.id]
@@ -75,7 +72,7 @@ Page({
   addToCart() {
     const { flower, quantity } = this.data
     const cart = app.globalData.cart || []
-    const existing = cart.find(item => item.id === flower.id)
+    const existing = cart.find((item) => item.id === flower.id)
 
     if (existing) {
       existing.quantity += quantity
@@ -86,7 +83,7 @@ Page({
         image: flower.images[0],
         price: flower.price,
         quantity: quantity,
-        selected: true
+        selected: true,
       })
     }
 
@@ -106,5 +103,5 @@ Page({
     setTimeout(() => {
       this.setData({ showToast: false })
     }, 1500)
-  }
+  },
 })

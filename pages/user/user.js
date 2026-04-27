@@ -1,5 +1,5 @@
 const app = getApp()
-const mock = require('../../mock/data')
+const api = require('../../utils/api')
 
 Page({
   data: {
@@ -14,7 +14,7 @@ Page({
     formName: '',
     formPhone: '',
     formAddress: '',
-    currentTab: 'profile'
+    currentTab: 'profile',
   },
 
   onLoad(options) {
@@ -26,29 +26,50 @@ Page({
     this.loadData()
   },
 
-  loadData() {
+  async loadData() {
     const userInfo = app.globalData.userInfo
     const orders = app.globalData.orders || []
     const favoriteIds = app.globalData.favorites || []
-    const addresses = app.globalData.addresses || []
-
-    const favoriteFlowers = favoriteIds
-      .map(id => mock.getFlowerById(id))
-      .filter(Boolean)
 
     this.setData({
       userInfo,
       loggedIn: !!userInfo,
       orderCounts: {
         all: orders.length,
-        pending: orders.filter(o => o.status === 'pending').length,
-        shipped: orders.filter(o => o.status === 'shipped').length,
-        completed: orders.filter(o => o.status === 'completed').length
+        pending: orders.filter((o) => o.status === 'pending').length,
+        shipped: orders.filter((o) => o.status === 'shipped').length,
+        completed: orders.filter((o) => o.status === 'completed').length,
       },
       favorites: favoriteIds,
-      favoriteFlowers,
-      addresses
     })
+
+    this.loadFavoriteFlowers(favoriteIds)
+    this.loadAddresses()
+  },
+
+  async loadFavoriteFlowers(favoriteIds) {
+    if (favoriteIds.length === 0) {
+      this.setData({ favoriteFlowers: [] })
+      return
+    }
+    try {
+      const allProducts = await api.getProducts()
+      const favoriteFlowers = allProducts.filter((f) => favoriteIds.includes(f.id))
+      this.setData({ favoriteFlowers })
+    } catch (e) {
+      console.error('加载收藏商品失败', e)
+    }
+  },
+
+  async loadAddresses() {
+    try {
+      const addresses = await api.getAddresses()
+      // 同步到全局，供下单页使用
+      app.globalData.addresses = addresses
+      this.setData({ addresses })
+    } catch (e) {
+      console.error('加载地址失败', e)
+    }
   },
 
   onLogin() {
@@ -58,21 +79,20 @@ Page({
         app.globalData.userInfo = res.userInfo
         this.setData({
           userInfo: res.userInfo,
-          loggedIn: true
+          loggedIn: true,
         })
       },
       fail: () => {
-        // 降级：使用默认信息
         const defaultInfo = {
           nickName: '花恋小天使',
-          avatarUrl: ''
+          avatarUrl: '',
         }
         app.globalData.userInfo = defaultInfo
         this.setData({
           userInfo: defaultInfo,
-          loggedIn: true
+          loggedIn: true,
         })
-      }
+      },
     })
   },
 
@@ -88,13 +108,13 @@ Page({
   goToDetail(e) {
     const { id } = e.currentTarget.dataset
     wx.navigateTo({
-      url: `/pages/detail/detail?id=${id}`
+      url: `/pages/detail/detail?id=${id}`,
     })
   },
 
   removeFavorite(e) {
     const { id } = e.currentTarget.dataset
-    const favorites = app.globalData.favorites.filter(fid => fid !== parseInt(id))
+    const favorites = app.globalData.favorites.filter((fid) => fid !== parseInt(id))
     app.globalData.favorites = favorites
     wx.setStorageSync('favorites', favorites)
     this.loadData()
@@ -112,7 +132,7 @@ Page({
       editingAddress: null,
       formName: '',
       formPhone: '',
-      formAddress: ''
+      formAddress: '',
     })
   },
 
@@ -123,7 +143,7 @@ Page({
       editingAddress: address,
       formName: address.name,
       formPhone: address.phone,
-      formAddress: address.fullAddress
+      formAddress: address.fullAddress,
     })
   },
 
@@ -131,64 +151,70 @@ Page({
     this.setData({ showAddressForm: false })
   },
 
-  onNameInput(e) { this.setData({ formName: e.detail.value }) },
-  onPhoneInput(e) { this.setData({ formPhone: e.detail.value }) },
-  onAddressInput(e) { this.setData({ formAddress: e.detail.value }) },
+  onNameInput(e) {
+    this.setData({ formName: e.detail.value })
+  },
+  onPhoneInput(e) {
+    this.setData({ formPhone: e.detail.value })
+  },
+  onAddressInput(e) {
+    this.setData({ formAddress: e.detail.value })
+  },
 
-  saveAddress() {
+  async saveAddress() {
     const { formName, formPhone, formAddress, editingAddress } = this.data
     if (!formName || !formPhone || !formAddress) {
       wx.showToast({ title: '请填写完整信息', icon: 'none' })
       return
     }
 
-    const addresses = [...(app.globalData.addresses || [])]
-    const newAddr = {
-      id: editingAddress ? editingAddress.id : Date.now(),
-      name: formName,
-      phone: formPhone,
-      fullAddress: formAddress,
-      isDefault: addresses.length === 0
+    try {
+      if (editingAddress) {
+        await api.editAddress(editingAddress.id, {
+          name: formName,
+          phone: formPhone,
+          fullAddress: formAddress,
+        })
+      } else {
+        await api.addAddress({
+          name: formName,
+          phone: formPhone,
+          fullAddress: formAddress,
+        })
+      }
+      this.setData({ showAddressForm: false })
+      this.loadAddresses()
+      wx.showToast({ title: '保存成功', icon: 'success' })
+    } catch (e) {
+      console.error('保存地址失败', e)
     }
-
-    if (editingAddress) {
-      const idx = addresses.findIndex(a => a.id === editingAddress.id)
-      if (idx >= 0) addresses[idx] = newAddr
-    } else {
-      addresses.push(newAddr)
-    }
-
-    app.globalData.addresses = addresses
-    wx.setStorageSync('addresses', addresses)
-    this.setData({ showAddressForm: false })
-    this.loadData()
-    wx.showToast({ title: '保存成功', icon: 'success' })
   },
 
-  deleteAddress(e) {
+  async deleteAddress(e) {
     const { id } = e.currentTarget.dataset
     wx.showModal({
       title: '提示',
       content: '确定要删除此地址吗？',
-      success: (res) => {
+      success: async (res) => {
         if (res.confirm) {
-          const addresses = app.globalData.addresses.filter(a => a.id !== id)
-          app.globalData.addresses = addresses
-          wx.setStorageSync('addresses', addresses)
-          this.loadData()
+          try {
+            await api.deleteAddress(id)
+            this.loadAddresses()
+          } catch (e) {
+            console.error('删除地址失败', e)
+          }
         }
-      }
+      },
     })
   },
 
-  setDefaultAddress(e) {
+  async setDefaultAddress(e) {
     const { id } = e.currentTarget.dataset
-    const addresses = app.globalData.addresses.map(a => ({
-      ...a,
-      isDefault: a.id === id
-    }))
-    app.globalData.addresses = addresses
-    wx.setStorageSync('addresses', addresses)
-    this.loadData()
-  }
+    try {
+      await api.setDefaultAddress(id)
+      this.loadAddresses()
+    } catch (e) {
+      console.error('设置默认地址失败', e)
+    }
+  },
 })

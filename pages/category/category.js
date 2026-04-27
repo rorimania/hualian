@@ -1,5 +1,5 @@
-const mock = require('../../mock/data')
 const app = getApp()
+const api = require('../../utils/api')
 
 Page({
   data: {
@@ -8,21 +8,17 @@ Page({
     currentCategory: null,
     searchValue: '',
     showSearch: false,
-    cartCount: 0
+    cartCount: 0,
   },
 
   onLoad(options) {
-    const cats = mock.categories
-    this.setData({
-      categories: cats,
-      flowers: mock.flowers,
-      currentCategory: null
-    })
+    this.loadCategories()
+    this.loadProducts()
 
     if (options.search) {
       this.setData({
         showSearch: true,
-        searchValue: options.search
+        searchValue: options.search,
       })
       this.doSearch(options.search)
     }
@@ -38,29 +34,41 @@ Page({
     this.setData({ cartCount: count })
   },
 
+  async loadCategories() {
+    try {
+      const categories = await api.getCategories()
+      this.setData({ categories })
+    } catch (e) {
+      console.error('加载分类失败', e)
+    }
+  },
+
+  async loadProducts(categoryId) {
+    try {
+      const params = categoryId ? { categoryId } : {}
+      const flowers = await api.getProducts(params)
+      this.setData({ flowers, currentCategory: categoryId || null, searchValue: '' })
+    } catch (e) {
+      console.error('加载商品失败', e)
+    }
+  },
+
   selectCategory(e) {
     const { id } = e.currentTarget.dataset
-    const flowers = id ? mock.getFlowersByCategory(id) : mock.flowers
-    this.setData({
-      currentCategory: id,
-      flowers,
-      searchValue: ''
-    })
+    this.loadProducts(id)
   },
 
   onSearchInput(e) {
     this.setData({ searchValue: e.detail.value })
   },
 
-  doSearch(keyword) {
-    const kw = keyword.toLowerCase()
-    const results = mock.flowers.filter(f =>
-      f.name.includes(kw) ||
-      f.englishName.toLowerCase().includes(kw) ||
-      f.desc.includes(kw) ||
-      f.story.includes(kw)
-    )
-    this.setData({ flowers: results })
+  async doSearch(keyword) {
+    try {
+      const flowers = await api.getProducts({ search: keyword })
+      this.setData({ flowers })
+    } catch (e) {
+      console.error('搜索失败', e)
+    }
   },
 
   onSearch() {
@@ -71,7 +79,7 @@ Page({
   goToDetail(e) {
     const { id } = e.currentTarget.dataset
     wx.navigateTo({
-      url: `/pages/detail/detail?id=${id}`
+      url: `/pages/detail/detail?id=${id}`,
     })
-  }
+  },
 })
