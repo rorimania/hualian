@@ -88,7 +88,42 @@ your-project/
 └── hualian-admin/        # 管理后台
 ```
 
-### 2. 启动后端
+### 2. 配置数据库
+
+确保 MySQL 8.0 服务已运行：
+
+```bash
+# 检查 MySQL 服务状态
+sc query MySQL80
+
+# 如果未运行，启动服务
+net start MySQL80
+```
+
+创建数据库：
+
+```bash
+"C:/Program Files/MySQL/MySQL Server 8.0/bin/mysql.exe" -u root -p
+```
+
+```sql
+CREATE DATABASE IF NOT EXISTS hanakotoba DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+exit
+```
+
+数据库默认连接配置（在 `hualian-backend/.env` 中）：
+
+```
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=114514
+DB_NAME=hanakotoba
+```
+
+> 首次启动后端时，会自动创建表结构并导入种子数据（12 个商品、6 个分类、3 个 Banner 以及管理员账号）。
+
+### 3. 启动后端
 
 ```bash
 cd hualian-backend
@@ -99,13 +134,13 @@ npm run dev
 
 要求：MySQL 8.0 已运行，在 `.env` 中配置数据库连接。
 
-### 3. 打开管理后台
+### 4. 打开管理后台
 
 浏览器访问 `http://localhost:3000/`
 
 默认账号：`rorimania` / `114514`
 
-### 4. 运行小程序
+### 5. 运行小程序
 
 用微信开发者工具打开 `hualian/` 目录，在「详情」→「本地设置」中勾选 **不校验合法域名**。
 
